@@ -7,12 +7,13 @@ using namespace std;
 
 // gets the array of data from lib.d
 string get_lib_text(string cwd) {
-  string line, libraryText;
+  string line, libraryText, fileLoc;
+  fileLoc = cwd + "/dat/lib.d";
   int librarySize, libraryLength;
   librarySize = libraryText.length();
   ifstream lib;
   // reads the lib.d file into a string
-  lib.open("lib.d");
+  lib.open(fileLoc);
   if (lib.is_open()) {
     while (getline(lib,line)) {
       libraryText += line;
