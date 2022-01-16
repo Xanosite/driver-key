@@ -37,6 +37,7 @@ int library_length(string libraryText) {
   return libraryLength;
 }
 
+// converts text file library into array
 int libText_to_arr(string library[][4], string libraryText) {
   int pos0, pos1, i, j;
   pos0 = libraryText.find("/",0);
@@ -58,16 +59,45 @@ int libText_to_arr(string library[][4], string libraryText) {
   return 0;
 }
 
+// counts files/folders in directory
+int drivers_count(string directory) {
+  int i = 0;
+  for (const auto & entry : filesystem::directory_iterator(directory)) {
+    i++;
+  }
+  return i;
+}
+
+// prints out text at program start
+int start_message(string cwd) {
+  string line, msgLoc;
+  msgLoc = cwd + "/dat/start.msg";
+  ifstream msgFile;
+  msgFile.open(msgLoc);
+  if (!(msgFile.is_open())) {
+    cout << "Error: Could not read start text file.";
+    return 1;
+  }
+  while (getline(msgFile,line)) {
+    cout << line << endl;
+  }
+  msgFile.close();
+  cout << endl;
+  return 0;
+}
+
 int main() {
   string cwd = filesystem::current_path();
+  string driversDirectory = cwd + "/lib/";
+  start_message(cwd);
   // get library array set up
   string libText = get_lib_text(cwd);
   int libSize = library_length(libText);
   string library[libSize][4];
   libText_to_arr(library, libText);
-  for (int i = 0; i < libSize; i++) {
-    cout << library[i][0] << " | " << library[i][1] << " | ";
-    cout << library[i][2] << " | " << library[i][3] << endl;
-  }
+  // text for user
+  cout << "Current drivers in library: " << libSize << endl;
+  cout << "Searching directory: " << driversDirectory << endl;
+  cout << "Found " << drivers_count(driversDirectory) << " drivers." << endl;
   return 0;
 }
