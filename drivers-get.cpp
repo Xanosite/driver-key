@@ -100,5 +100,8 @@ int main() {
   cout << "Current drivers in library: " << libSize << endl;
   cout << "Searching directory: " << driversDirectory << endl;
   cout << "Found " << drivers_count(driversDirectory) << " drivers." << endl;
+  // end of program
+  cout << endl << "Program finished, press ENTER to terminate.";
+  cin.get();
   return 0;
 }
